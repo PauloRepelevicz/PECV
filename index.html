@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>100 motivos para te amar</title>
+  <style>
+    :root{--card-w:min(720px,92vw); --pink:#ff4f9a;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background:#000;
+      color:#fff;
+      font-family: 'Poppins', system-ui, sans-serif;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+
+    /* Fundo com partículas suaves */
+    .bg-particles{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:radial-gradient(circle at center, rgba(255,0,90,0.08), transparent 70%);
+      animation:pulse 6s infinite ease-in-out;
+    }
+    @keyframes pulse{
+      0%,100%{opacity:0.5} 50%{opacity:1}
+    }
+
+    .card{
+      width:var(--card-w);
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(10px);
+      border-radius:18px;
+      padding:32px;
+      text-align:center;
+      box-shadow:0 0 25px rgba(255,0,120,0.12);
+      animation:cardIn 0.8s ease forwards;
+    }
+    @keyframes cardIn{from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none}}
+
+    h1{
+      font-size:24px;
+      color:var(--pink);
+      margin-bottom:18px;
+      font-weight:600;
+    }
+
+    .display{
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      padding:16px;
+    }
+
+    .motivo{
+      animation:fadeMotivo 0.45s ease;
+    }
+    @keyframes fadeMotivo{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+
+    .controls{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      margin-top:14px;
+    }
+
+    button.arrow{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:12px;
+      font-size:20px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    button.arrow:hover{
+      background:rgba(255,255,255,0.12);
+      transform:scale(1.08);
+    }
+
+    button.arrow:disabled{
+      opacity:0.3;
+      transform:none;
+      cursor:default;
+    }
+
+    .counter{
+      font-size:15px;
+      color:rgba(255,255,255,0.7);
+      display:flex;
+      align-items:center;
+    }
+
+    /* Botão final com animação */
+    .btn-final{
+      display:inline-block;
+      margin-top:18px;
+      padding:12px 18px;
+      border-radius:14px;
+      background:var(--pink);
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      opacity:0;
+      transform:translateY(10px);
+      transition:0.4s;
+    }
+
+    .btn-final.show{
+      opacity:1;
+      transform:translateY(0);
+      box-shadow:0 0 15px rgba(255,0,120,0.4);
+    }
+
+    .hint{
+      font-size:13px;
+      opacity:0.5;
+      margin-top:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-particles"></div>
+  <main class="card">
+    <h1>100 motivos para te amar</h1>
+
+    <section class="display">
+      <div id="motivo" class="motivo">Carregando...</div>
+    </section>
+
+    <div class="controls">
+      <button id="prev" class="arrow">◀</button>
+      <div class="counter" id="counter">0 / 100</div>
+      <button id="next" class="arrow">▶</button>
+    </div>
+
+    <a id="finalBtn" class="btn-final" href="text.html" hidden>Clica aqui</a>
+    <div class="hint">Voce é meu Mundo.</div>
+  </main>
+
+<script>
+    // Lista com 100 motivos em português. Edite à vontade.
+    const motivos = [
+      "Você ilumina meus dias.",
+      "Seu sorriso me acalma.",
+      "Seu abraço é meu lugar seguro.",
+      "Você ri das minhas piadas ruins.",
+      "Sua paciência me inspira.",
+      "Você me aceita como eu sou.",
+      "Seu olhar me deixa sem palavras.",
+      "Você compartilha seus sonhos comigo.",
+      "A forma como cuida de mim.",
+      "Você me motiva a ser melhor.",
+      "Seu jeito único de ser.",
+      "Você entende meus silêncios.",
+      "Sua voz acalma meu coração.",
+      "Você celebra minhas pequenas vitórias.",
+      "Sua presença faz tudo parecer certo.",
+      "Você me apoia mesmo nos dias ruins.",
+      "O seu cheiro",
+      "O jeito como sua boca fica quando vc ri",
+      "Você me desafia.",
+      "Seu carinho descomplicado.",
+      "Você me lembra de ser grato.",
+      "Seu senso de humor quebrado.",
+      "Você é minha paz depois do caos.",
+      "Seu jeito de se preparar pra mim.",
+      "A sinceridade nas suas palavras.",
+      "Sua generosidade.",
+      "O modo como você me olha de longe.",
+      "Você transforma momentos simples em especiais.",
+      "Seu cuidado com os detalhes.",
+      "Você me faz querer aprender mais.",
+      "A forma como segura minha mão.",
+      "Você me escuta sem julgar.",
+      "Seu abraço.",
+      "O brilho nos seus olhos quando fala dos seus planos.",
+      "Você me acolhe nas minhas fraquezas.",
+      "Seu jeito de elogiar com exageros.",
+      "Você torna minha vida mais leve.",
+      "Seu apoio nas decisões difíceis.",
+      "Você ama mesmo com defeitos.",
+      "A segurança que sua presença traz.",
+      "Você me faz rir quando eu quero chorar.",
+      "Seu compromisso com o que acredita.",
+      "A cumplicidade que temos.",
+      "Você me surpreende sempre.",
+      "Seu olhar quando estamos sozinhos.",
+      "Você transforma tudo pra melhor.",
+      "Sua vontade de crescer junto.",
+      "Você me faz sentir em casa.",
+      "O jeito que cuida da família.",
+      "Você respeita minhas escolhas.",
+      "Sua curiosidada.",
+      "Você me entende.",
+      "A honestidade nas suas críticas.",
+      "Você me traz equilíbrio.",
+      "Seu abraço depois de um dia difícil.",
+      "Você tem um coração enorme.",
+      "Sua determinação me inspira.",
+      "Você me faz acreditar no amor.",
+      "Seu toque é reconfortante.",
+      "Você enfrenta desafios ao meu lado.",
+      "A forma como fala com gentileza.",
+      "Você é meu ponto de apoio.",
+      "Seu jeito de cuidar de si mesma.",
+      "Você me ensina a ser paciente.",
+      "Sua autenticidade.",
+      "Você celebra minha felicidade.",
+      "A forma como sonha cmg.",
+      "Você faz planos comigo.",
+      "Seu cheiro me acalma.",
+      "Você é minha confidente.",
+      "A segurança do seu beijo.",
+      "Você se importa com oq eu penso.",
+      "Seu sorriso ao me ver.",
+      "Você aceita minhas manias.",
+      "A força que você mostra nas dificuldades.",
+      "Você faz cada momento valer a pena.",
+      "Seu olhar de manha.",
+      "Você me transforma para melhor.",
+      "Sua coragem para admitir erros.",
+      "Você me inspira a cuidar mais de mim.",
+      "Seu tom de voz quando chama meu nome.",
+      "Você me faz sentir amado todos os dias.",
+      "O jeitinho que você organiza as coisas.",
+      "Você me aceita eu sendo eu.",
+      "Sua risada contagiante.",
+      "Você me faz querer voltar para casa.",
+      "Seu beijo antes de dormir quando eu tava na sua casa.",
+      "Você é minha melhor companhia.",
+      "Seu olhar de orgulho por quem eu sou.",
+      "A maneira que olha para o nosso futuro.",
+      "Você é minha escolha todos os dias.",
+      "Seu bafinho de manha.",
+      "O jeito que vc se entrega quando estamos sozinhos",
+      "Sua confiança em me contar as coisas.",
+      "Voce sendo vc.",
+      "Vc luta pra dar certo.",
+      "Sua beleza.",
+      "Seu corpo.",
+      "O jeito como me seduz.",
+      "Você me ama e eu amo você."
+    ];
+
+    // Elementos
+    const motivoEl = document.getElementById('motivo');
+    const counterEl = document.getElementById('counter');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const finalBtn = document.getElementById('finalBtn');
+
+    let index = 0;
+
+    function render(){
+      motivoEl.classList.remove('motivo');
+      // reflow to restart animation
+      void motivoEl.offsetWidth;
+      motivoEl.classList.add('motivo');
+
+      motivoEl.textContent = motivos[index];
+      counterEl.textContent = `${index + 1} / ${motivos.length}`;
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === motivos.length - 1;
+
+      // Mostrar botão final SOMENTE no último motivo
+      if(index === motivos.length - 1){
+        finalBtn.hidden = false;
+        finalBtn.classList.add('show');
+      } else {
+        finalBtn.hidden = true;
+        finalBtn.classList.remove('show');
+      }
+    }
+
+    prevBtn.addEventListener('click', ()=>{
+      if(index>0) index--;
+      render();
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(index < motivos.length - 1) index++;
+      render();
+    });
+
+    // Teclas de teclado
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowLeft') prevBtn.click();
+      if(e.key === 'ArrowRight') nextBtn.click();
+    });
+
+    // Toque: swipe simples
+    let touchStartX = null;
+    document.addEventListener('touchstart', (e)=>{ touchStartX = e.changedTouches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', (e)=>{
+      if(touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 40){
+        if(dx > 0) prevBtn.click(); else nextBtn.click();
+      }
+      touchStartX = null;
+    }, {passive:true});
+
+    // Inicializa
+    render();
+
+    // Função para permitir avançar com clique no display
+    motivoEl.addEventListener('click', ()=>{
+      if(index < motivos.length -1) nextBtn.click();
+    });
+
+    // Se quiser atualizar o link final dinamicamente, faça assim:
+    // finalBtn.href = 'sua-outra-pagina.html';
+  </script>
+</body>
+</html>
