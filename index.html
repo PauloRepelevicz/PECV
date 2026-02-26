@@ -4,56 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Você</title>
-    <style>
-        /* Estilos gerais da página */
+    <style>  
         body {
-            background-color: #000000; /* Fundo preto */
-            color: #ffffff; /* Letras brancas */
+            background-color: #000000; 
+            color: #ffffff; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Ocupa 100% da altura da tela */
+            height: 100vh; 
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             padding: 20px;
         }
-
-        /* Estilo do título */
         h1 {
             margin-bottom: 50px;
             font-size: 2.5rem;
             font-weight: 300;
         }
-
-        /* Estilo do botão */
         button {
-            background-color: #ff4757; /* Cor bonita de destaque */
+            background-color: #ff4757; 
             color: white;
             border: none;
             padding: 15px 40px;
             font-size: 1.2rem;
-            border-radius: 30px; /* Bordas arredondadas */
+            border-radius: 30px; 
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s;
         }
-
         button:hover {
-            background-color: #ff6b81; /* Fica um pouco mais claro ao passar o mouse */
-            transform: scale(1.05); /* Dá uma leve aumentada */
+            background-color: #ff6b81; 
+            transform: scale(1.05); 
         }
-
-        /* Estilo da mensagem oculta */
         #mensagem {
-            display: none; /* Escondido por padrão */
+            display: none; 
             font-size: 2rem;
-            color: #ff9f43; /* Uma cor quente e comemorativa */
+            color: #ff9f43; 
             font-weight: bold;
             animation: fadeIn 1.5s ease-in-out;
         }
-
-        /* Efeito de fade-in para a mensagem */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -61,26 +51,18 @@
     </style>
 </head>
 <body>
-
     <h1>para a mulher mais linda que eu conheço</h1>
-    
     <button id="btnSurpresa">clique aqui</button>
-
     <div id="mensagem">Parabéns por ter passado em enfermagem! 🩺💖</div>
-
     <script>
-        // Pega os elementos do HTML para o JavaScript
         const botao = document.getElementById('btnSurpresa');
         const mensagem = document.getElementById('mensagem');
         const titulo = document.querySelector('h1');
-
-        // Adiciona a ação de clique no botão
         botao.addEventListener('click', () => {
-            botao.style.display = 'none'; // Esconde o botão
-            titulo.style.display = 'none'; // Esconde o título (opcional, remova esta linha se quiser manter o título na tela)
-            mensagem.style.display = 'block'; // Mostra a mensagem de parabéns
+            botao.style.display = 'none'; 
+            titulo.style.display = 'none';  
+            mensagem.style.display = 'block'; 
         });
     </script>
-
 </body>
 </html>
